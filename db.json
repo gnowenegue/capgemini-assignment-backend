@@ -1,0 +1,52 @@
+{
+  "appliances": [
+    {
+      "id": 1,
+      "serialNumber": "1231",
+      "brand": "LG",
+      "model": "Test1",
+      "status": "new",
+      "dateBought": 1605937018961
+    },
+    {
+      "id": 2,
+      "serialNumber": "1232",
+      "brand": "Samung",
+      "model": "Test2",
+      "status": "new",
+      "dateBought": 1605937018961
+    },
+    {
+      "id": 3,
+      "serialNumber": "1233",
+      "brand": "Bosch",
+      "model": "Test3",
+      "status": "new",
+      "dateBought": 1605937018961
+    },
+    {
+      "id": 4,
+      "serialNumber": "1234",
+      "brand": "LG",
+      "model": "Test4",
+      "status": "new",
+      "dateBought": 1605937018961
+    },
+    {
+      "id": 5,
+      "serialNumber": "1235",
+      "brand": "Hitachi",
+      "model": "Test5",
+      "status": "new",
+      "dateBought": 1605937018961
+    },
+    {
+      "serialNumber": "asdf",
+      "brand": "sadf",
+      "model": "asdf",
+      "status": "!$$@#@#%$",
+      "dateBought": 1605830400000,
+      "id": 6
+    }
+  ]
+}
