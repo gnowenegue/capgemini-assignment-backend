@@ -11,6 +11,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  autoIndex: true,
 });
 
 const db = mongoose.connection;
