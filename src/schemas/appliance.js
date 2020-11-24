@@ -17,6 +17,4 @@ applianceSchema.index(
   { unique: true }
 );
 
-console.log('##### applianceSchema.indexes()', applianceSchema.indexes());
-
 module.exports = applianceSchema;

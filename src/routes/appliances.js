@@ -1,7 +1,6 @@
 const express = require('express');
 const moment = require('moment');
 
-
 const ApplianceModel = require('../models/Appliance');
 
 const router = express.Router();
@@ -22,18 +21,17 @@ router.get('/appliances', async (req, res) => {
   addProperty(req.query, filterParams, 'brand');
   addProperty(req.query, filterParams, 'model');
   addProperty(req.query, filterParams, 'status');
-  // addProperty(req.query, filterParams, 'dateBought');
+
   if (req.query.dateBought) {
     filterParams.dateBought = {
-      $gte: moment(+req.query.dateBought).startOf('day').valueOf(),
-      $lte: moment(+req.query.dateBought).endOf('day').valueOf(),
+      $gte: moment(+req.query.dateBought)
+        .startOf('day')
+        .valueOf(),
+      $lte: moment(+req.query.dateBought)
+        .endOf('day')
+        .valueOf(),
     };
   }
-
-  console.log('##### filterParams', filterParams);
-
-  // console.log('##### req.query.dateBought', req.query.dateBought);
-  // console.log('##### moment(req.query.dateBought)', moment(+req.query.dateBought).format());
 
   try {
     const appliancesCount = await ApplianceModel.countDocuments(filterParams);
@@ -47,8 +45,8 @@ router.get('/appliances', async (req, res) => {
 
     res.json(appliancesRes);
   } catch (e) {
-    console.error(e);
-    res.send(e);
+    console.error(JSON.stringify(e));
+    res.status(400).send({ message: e.message });
   }
 });
 
@@ -56,12 +54,16 @@ router.post('/appliances', async (req, res) => {
   const newAppliance = new ApplianceModel(req.body);
   try {
     const applianceRes = await newAppliance.save();
-    console.log('##### applianceRes', applianceRes);
+    // console.log('##### applianceRes', applianceRes);
 
     res.json(applianceRes);
   } catch (e) {
-    console.error(e);
-    res.send(e);
+    console.error(JSON.stringify(e));
+
+    if (e.code === 11000)
+      return res.status(400).send({ message: 'Duplicate record found.' });
+
+    res.status(400).send({ message: e.message });
   }
 });
 
@@ -71,24 +73,27 @@ router.put('/appliances/:id', async (req, res) => {
       req.params.id,
       req.body
     );
-    console.log('##### applianceRes', applianceRes);
+    // console.log('##### applianceRes', applianceRes);
 
     res.json(applianceRes);
   } catch (e) {
-    console.error(e);
-    res.send(e);
+    console.error(JSON.stringify(e));
+    if (e.code === 11000)
+      return res.status(400).send({ message: 'Duplicate record found.' });
+
+    res.status(400).send({ message: e.message });
   }
 });
 
 router.delete('/appliances/:id', async (req, res) => {
   try {
     const applianceRes = await ApplianceModel.findByIdAndRemove(req.params.id);
-    console.log('##### applianceRes', applianceRes);
+    // console.log('##### applianceRes', applianceRes);
 
     res.json(applianceRes);
   } catch (e) {
-    console.error(e);
-    res.send(e);
+    console.error(JSON.stringify(e));
+    res.status(400).send({ message: e.message });
   }
 });
 
