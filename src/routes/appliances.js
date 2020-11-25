@@ -51,7 +51,20 @@ router.get('/appliances', async (req, res) => {
 });
 
 router.post('/appliances', async (req, res) => {
+  const { serialNumber, brand, model } = req.body;
+
+  const duplicateApplianceRes = await ApplianceModel.find({
+    serialNumber,
+    brand,
+    model,
+  });
+
+  if (duplicateApplianceRes.length) {
+    return res.status(400).send({ message: 'Duplicate record found.' });
+  }
+
   const newAppliance = new ApplianceModel(req.body);
+
   try {
     const applianceRes = await newAppliance.save();
     // console.log('##### applianceRes', applianceRes);
@@ -68,6 +81,18 @@ router.post('/appliances', async (req, res) => {
 });
 
 router.put('/appliances/:id', async (req, res) => {
+  const { serialNumber, brand, model } = req.body;
+
+  const duplicateApplianceRes = await ApplianceModel.find({
+    serialNumber,
+    brand,
+    model,
+  });
+
+  if (duplicateApplianceRes.length) {
+    return res.status(400).send({ message: 'Duplicate record found.' });
+  }
+
   try {
     const applianceRes = await ApplianceModel.findByIdAndUpdate(
       req.params.id,
