@@ -89,7 +89,7 @@ router.put('/appliances/:id', async (req, res) => {
     model,
   });
 
-  if (duplicateApplianceRes.length) {
+  if (duplicateApplianceRes.length > 1) {
     return res.status(400).send({ message: 'Duplicate record found.' });
   }
 
