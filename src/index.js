@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 
 const appliancesRouter = require('./routes/appliances');
@@ -23,6 +24,11 @@ db.once('open', function () {
 const app = express();
 
 app.use(morgan('combined'));
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(
   cors({
     exposedHeaders: ['X-Total-Count'],
